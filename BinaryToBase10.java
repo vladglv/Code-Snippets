@@ -5,7 +5,7 @@ public class Base2toBase10 {
 	public static void main(String[] args) {
 
         String input = "101010";
-				System.out.println("The binary number " + input + " is " + BinaryToNumber(input) + " in base 10.");
+		System.out.println("The binary number " + input + " is " + BinaryToNumber(input) + " in base 10.");
 
 	}
 	
