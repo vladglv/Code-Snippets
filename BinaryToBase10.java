@@ -10,7 +10,7 @@ public class Base2toBase10 {
 	{
 		int res = 0;
 		for (int i = 0, pot = 1; i < num.length(); i++)
-			res += ((num.charAt(i) == '1') ? (pot << (num.length() - i - 1)) : 0);
+			res |= ((num.charAt(i) == '1') ? (pot << (num.length() - i - 1)) : 0);
 	
 		return res;
 	}
