@@ -1,25 +1,25 @@
-module inter
+﻿module inter
 
 let list_insert (e, n, list) = 
-    let rec list_insert_helper (e, n, list, acc_i, acc) = 
-        match list with
-        | [] -> List.rev acc
+    let len = List.length list
+    
+    let rec helper (e, n, l, acc) = 
+        match l with
+        | [] -> 
+            if n = len then [ e ]
+            else []
         | x :: xs -> 
-            if n = 0 then 
-                    list_insert_helper (e, n, [], 1, List.rev (e :: list))
-            else if n = acc_i then 
-                    list_insert_helper (e, n, xs, acc_i + 1, e :: (x :: acc))
-            else    list_insert_helper (e, n, xs, acc_i + 1, x :: acc)
-    list_insert_helper (e, n, list, 1, [])
+            if n = acc then e :: x :: helper (e, n, xs, acc + 1)
+            else x :: helper (e, n, xs, acc + 1)
+    helper (e, n, list, 0)
 
 let inter item list = 
-    let rec inter_helper (item, ilist, clist, pos, acc) = 
+    let rec helper (item, ilist, clist, pos) = 
         match ilist with
-        | [] -> List.rev (list_insert (item, pos, clist) :: acc)
+        | [] -> [ list_insert (item, pos, clist) ]
         | x :: xs -> 
-            inter_helper (item, xs, clist, pos + 1,
-                         list_insert (item, pos, clist) :: acc)
-    inter_helper (item, list, list, 0, [])
+            list_insert (item, pos, clist) :: helper (item, xs, clist, pos + 1)
+    helper (item, list, list, 0)
 
 [<EntryPoint>]
 let main args = 
