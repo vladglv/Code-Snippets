@@ -1,32 +1,18 @@
-﻿module inter
+﻿module interleave
 
-let list_insert (e, n, list) = 
-    let len = List.length list
-    
-    let rec helper (e, n, l, acc) = 
-        match l with
-        | [] -> 
-            if n = len then [ e ]
-            else []
+let inter e l = 
+    let rec helper e il cl acc pos =
+        match il with
+        | [] -> (e :: cl) :: acc
         | x :: xs -> 
-            if n = acc then e :: x :: helper (e, n, xs, acc + 1)
-            else x :: helper (e, n, xs, acc + 1)
-    helper (e, n, list, 0)
+            let t_ = List.splitAt pos cl;
+            helper e xs cl (((fst t_) @ (e :: (snd t_))) :: acc) (pos - 1)
+    helper e l l [] (List.length l)
+        
+let test_list = [ 1 .. 1 .. 16 ]
+let test_item = 0
+let test_rslt = (inter test_item test_list)
 
-let inter item list = 
-    let rec helper (item, ilist, clist, pos) = 
-        match ilist with
-        | [] -> [ list_insert (item, pos, clist) ]
-        | x :: xs -> 
-            list_insert (item, pos, clist) :: helper (item, xs, clist, pos + 1)
-    helper (item, list, list, 0)
-
-[<EntryPoint>]
-let main args = 
-    let test_list = [ 1; 2; 3 ]
-    let test_item = 0
-    printfn "Item to insert\t: %A" test_item
-    printfn "Original list\t: %A" test_list
-    printfn "Modified list\t: %A" (inter test_item test_list)
-    // Return 0. This indicates success.
-    0
+printfn "Item to insert\t: %A" test_item
+printfn "Original list\t: %A" test_list
+printfn "Modified list\t: %A" test_rslt
