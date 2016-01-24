@@ -1,13 +1,9 @@
 ﻿module interleave
 
-let inter e l = 
-    let rec helper e il cl acc pos =
-        match il with
-        | [] -> (e :: cl) :: acc
-        | x :: xs -> 
-            let t_ = List.splitAt pos cl;
-            helper e xs cl (((fst t_) @ (e :: (snd t_))) :: acc) (pos - 1)
-    helper e l l [] (List.length l)
+let rec inter e l = 
+    match l with
+    | [] -> [ [ e ] ]
+    | x :: xs -> (e :: x :: xs) :: List.map (fun u -> x :: u) (inter e xs)
         
 let test_list = [ 1 .. 1 .. 16 ]
 let test_item = 0
