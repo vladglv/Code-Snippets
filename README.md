@@ -1,3 +1,3 @@
 # Code-Snippets
 
-Collects of various and perhaps useful code samples
+Collection of various and perhaps useful code samples
